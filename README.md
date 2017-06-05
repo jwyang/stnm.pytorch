@@ -27,6 +27,8 @@ If you find our code is useful in your researches, please cite:
         year={2017}
     }
 
+and
+
     @inproceedings{jaderberg2015spatial,
         title={Spatial transformer networks},
         author={Jaderberg, Max and Simonyan, Karen and Zisserman, Andrew and others},
