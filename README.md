@@ -7,9 +7,11 @@ This module was used in our ICLR 2017 paper "LR-GAN: Layered Recursive Generativ
 
 ### Build
 
-1. Install [PyTorch](http://pytorch.org/) with proper commands.
+1. Install /*cffi*/ with pip.
 
-2. Go to the folder script, and them simply run the following commands:
+2. Install [PyTorch](http://pytorch.org/) with proper commands.
+
+3. Go to the folder script, and them simply run the following commands:
 ```bash
 $ ./make.sh
 $ python test.sh
