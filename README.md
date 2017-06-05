@@ -37,6 +37,6 @@ and
         year={2015}
     }
 
-### Reference
+### Reference & Acknowledgement
 
-This project is built based on [pytorch-stn](https://github.com/fxia22/stn.pytorch).
+This project is built based on [pytorch-stn](https://github.com/fxia22/stn.pytorch). Thank the author for such nice work.
