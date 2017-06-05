@@ -1,5 +1,5 @@
 # stnm.pytorch
-Pytorch code for spatial transformer network with mask (STNM). Given the canvas, foreground image, foreground mask and the transformation for the foreground, STNM paste the foreground after transformed to the canvas with the alpha blending guided by the foreground mask. This is used in our paper "LR-GAN: Layered Recursive Generative Adversarial Networks for Image Generation".
+This is the pytorch code for spatial transformer network with mask (STNM). Given the canvas, foreground image, foreground mask and the transformation for the foreground, STNM paste the foreground after transformed to the canvas with the alpha blending guided by the foreground mask. This module was used in our ICLR 2017 paper "LR-GAN: Layered Recursive Generative Adversarial Networks for Image Generation".
 
 ### Build
 
