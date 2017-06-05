@@ -14,6 +14,7 @@ If there is no errors by far, then congratulations, you make it!
 
 ### Citation
 If you find our code is useful in your researches, please cite:
+
    @article{yang2017lr,
      title={LR-GAN: Layered recursive generative adversarial networks for image generation},
      author={Yang, Jianwei and Kannan, Anitha and Batra, Dhruv and Parikh, Devi},
