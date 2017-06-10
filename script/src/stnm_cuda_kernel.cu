@@ -146,6 +146,9 @@ __global__ void bilinearSamplingFromGrid(float* inputImages_data, int inputImage
 
    int yInTopLeft, xInTopLeft;
    float yWeightTopLeft, xWeightTopLeft;
+   // if (xf < 1 && xf > -1 && yf < 1 && yf > -1)
+   // printf("xf: %f, yf: %f\n", xf, yf);
+
    getTopLeft(xf, inputImages_width, xInTopLeft, xWeightTopLeft);
    getTopLeft(yf, inputImages_height, yInTopLeft, yWeightTopLeft);
 
@@ -210,12 +213,17 @@ __global__ void bilinearSamplingFromGrid(float* inputImages_data, int inputImage
         + (1 - xWeightTopLeft) * (1 - yWeightTopLeft) * inBottomRight;
 
       // we do not replace the canvas region with foreground, instead, we add value together.
+      // printf("mask value: %f\n", m);
+      // printf("bg value: %f\n", canvas_data[outAddress + t]);
+      // printf("fg value: %f\n", v);
       output_data[outAddress + t] = (1 - m) * canvas_data[outAddress + t] + m * v;
+      // printf("out value: %f\n", output_data[outAddress + t]);
       // output_data[outAddress + t] = v;
    }
 }
 
-template<bool onlyGrid> __global__ void backwardBilinearSampling(float* inputImages_data, int inputImages_strideBatch, int inputImages_strideChannels, int inputImages_strideHeight, int inputImages_strideWidth,
+template<bool onlyGrid> __global__ void backwardBilinearSampling(
+                                         float* inputImages_data, int inputImages_strideBatch, int inputImages_strideChannels, int inputImages_strideHeight, int inputImages_strideWidth,
                                          float* gradInputImages_data, int gradInputImages_strideBatch, int gradInputImages_strideChannels, int gradInputImages_strideHeight, int gradInputImages_strideWidth,
                                          float* grids_data, int grids_strideBatch, int grids_strideYX, int grids_strideHeight, int grids_strideWidth,
                                          float* gradGrids_data, int gradGrids_strideBatch, int gradGrids_strideYX, int gradGrids_strideHeight, int gradGrids_strideWidth,
@@ -327,10 +335,27 @@ template<bool onlyGrid> __global__ void backwardBilinearSampling(float* inputIma
 
       for(int t=threadIdx.x; t<inputImages_channels; t+= blockDim.x)
       {
-
          float gradOutValue = gradOutput_data[gradOutputAddress + t];
          float gradOutValue_fg = gradOutValue * m;
          float gradOutValue_bg = gradOutValue * (1 - m);
+
+         // jw2yang: copy the gradients outside the object region to canvas, and inside region
+         if (!topLeftIsIn && !topRightIsIn && !bottomLeftIsIn && !bottomRightIsIn) {
+            gradCanvas_data[gradOutputAddress + t] = gradOutput_data[gradOutputAddress + t];
+            // if (b == 0 && yOut == 10 && xOut == 10) {
+            //    printf("all out");
+            //    printf("gradOut value: %f ", gradOutput_data[gradOutputAddress + t]);
+            //    printf("gradCanvas value: %f ", gradCanvas_data[gradOutputAddress + t]);
+            // }
+         }
+         else {
+           gradCanvas_data[gradOutputAddress + t] = gradOutValue_bg;
+          //  if (b == 0 && yOut == 10 && xOut == 10) {
+          //     printf("gradOut value: %f ", gradOutput_data[gradOutputAddress + t]);
+          //     printf("gradCanvas value: %f ", gradCanvas_data[gradOutputAddress + t]);
+          //  }
+         }
+
          // bool between(int value, int lowerBound, int upperBound)
          if(topLeftIsIn)
          {
@@ -358,14 +383,6 @@ template<bool onlyGrid> __global__ void backwardBilinearSampling(float* inputIma
             float inBottomRight = inputImages_data[inBottomRightAddress + t];
             bottomRightDotProduct += inBottomRight * gradOutValue_fg;
             if(!onlyGrid) atomicAdd(&gradInputImages_data[gradInputImagesBottomRightAddress + t], (1 - xWeightTopLeft) * (1 - yWeightTopLeft) * gradOutValue_fg);
-         }
-
-         // jw2yang: copy the gradients outside the object region to canvas, and inside region
-         if (!topLeftIsIn && !topRightIsIn && !bottomLeftIsIn && !bottomRightIsIn) {
-            gradCanvas_data[gradOutputAddress + t] = gradOutValue;
-         }
-         else {
-            gradCanvas_data[gradOutputAddress + t] = gradOutValue_bg;
          }
 
          // jw2yang: compute the gradient mask value
