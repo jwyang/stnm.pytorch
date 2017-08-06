@@ -13,7 +13,7 @@ This module was used in our ICLR 2017 paper "LR-GAN: Layered Recursive Generativ
 3. Go to the folder *script*, and them simply run the following commands:
 ```bash
 $ ./make.sh
-$ python test.sh
+$ python test.py
 ```
 If there is no errors by far, then congratulations, you make it!
 
