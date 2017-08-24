@@ -10,6 +10,10 @@ Given the canvas, foreground image, foreground mask and the (affine) transformat
 <img src="images/stnm_formula.png" width="650"/>
 </div>
 
+<div style="color:#0000FF" align="center">
+<img src="images/stnm_figure.png" width="650"/>
+</div>
+
 ### Build
 
 1. Install *cffi* with pip.
