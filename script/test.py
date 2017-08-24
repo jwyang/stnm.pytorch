@@ -6,7 +6,7 @@ import torch.nn as nn
 from torch.autograd import Variable
 
 from modules.stnm import STNM
-from modules.gridgen import AffineGridGen, CylinderGridGen, CylinderGridGenV2, DenseAffine3DGridGen, DenseAffine3DGridGen_rotate
+from modules.gridgen import AffineGridGen
 
 import time
 
