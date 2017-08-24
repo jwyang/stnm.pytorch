@@ -11,7 +11,7 @@ Given the canvas, foreground image, foreground mask and the (affine) transformat
 </div>
 
 <div style="color:#0000FF" align="center">
-<img src="images/stnm_figure.png" width="650"/>
+<img src="images/stnm_figure.png" width="800"/>
 </div>
 
 ### Build
