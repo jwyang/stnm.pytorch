@@ -4,7 +4,7 @@ STNM was used in our ICLR 2017 paper "LR-GAN: Layered Recursive Generative Adver
 
 ### Introduction
 
-Given the canvas $x_{t-1}$, foreground image $f_t$, foreground mask $m_t$ and the (affine) transformation matrix $a_t$, STNM pastes the transformed foreground to the canvas via alpha blending guided by the transformed foreground mask. The formulation is:
+Given the canvas $$x_{t-1}$$, foreground image $f_t$, foreground mask $m_t$ and the (affine) transformation matrix $a_t$, STNM pastes the transformed foreground to the canvas via alpha blending guided by the transformed foreground mask. The formulation is:
 
 <div style="color:#0000FF" align="center">
 <img src="images/stnm_formula.png" width="650"/>
