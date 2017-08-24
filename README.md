@@ -14,6 +14,8 @@ Given the canvas, foreground image, foreground mask and the (affine) transformat
 <img src="images/stnm_figure.png" width="800"/>
 </div>
 
+As we can see, STNM involves a down sampling process, which transform the foregound image and foregorund mask into a smaller region. However, I found directly using a upsampler works good or even better than downsampler in my experiments. As such, I used the original biliear sampler in STN. The core code for STNM is in the [stnm_cuda_kernel.cu](https://github.com/jwyang/stnm.pytorch/blob/master/script/src/stnm_cuda_kernel.cu).
+
 ### Build
 
 1. Install *cffi* with pip.
